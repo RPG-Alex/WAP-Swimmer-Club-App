@@ -8,10 +8,5 @@
 <header>
   <?php
   echo "<div class='navbar'>".SITENAME." ";
-  if ($_GET['page']=='home') {
-    echo "<a href='?page=login'>Login</a></div>";
-  } else {
-    echo "<a href='?page=home'>Logout</a></div>";
-  }
    ?>
 </header>

@@ -1,11 +1,6 @@
 <?php
-if ($_GET['page']=='login') {
-  echo "log in now";
-} else if ($_GET['page']=='register'){
-  echo "register now";
-} elseif ($_SESSION) {
-  // check if they are already logged in
-}
-else {
-  echo "Return to home page";
-}
+echo "<form class='login' action='index.php' method='post'>
+    <input type='text' name='userid' placeholder='username'>
+    <input type='password' name='password' placeholder='type your password'>
+    <input type='submit' name='login' value='submit'>
+  </form>";
