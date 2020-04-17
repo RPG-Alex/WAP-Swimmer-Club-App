@@ -6,7 +6,7 @@ class Login extends Database {
     $this->db = new Database;
   }
   public function login(){
-
+    
   }
   public function logout(){
 

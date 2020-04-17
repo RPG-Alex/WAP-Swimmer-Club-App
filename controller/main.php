@@ -6,6 +6,7 @@ if (isset($_GET['page'])) {
 } else {
   $currentView->loadView('splash');
 }
-
-
-var_dump($_POST);
+if (isset($_POST['register'])) {
+  include_once "controller/users.php";
+  echo "users loaded";
+}
