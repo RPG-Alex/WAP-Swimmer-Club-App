@@ -1,12 +1,28 @@
 <?php
+$userMessage = ""; // User message used to load messages related to logging in/out and registering. Is updated in the users.php controller only!
 include_once "controller/viewLoader.php";
 $currentView = new View();
 if (isset($_GET['page'])) {
-  $currentView->loadView($_GET['page']);
+  $loadedView = $currentView->loadView($_GET['page']);
 } else {
-  $currentView->loadView('splash');
+  $loadedView = $currentView->loadView('splash');
 }
+
 if (isset($_POST['register'])) {
   include_once "controller/users.php";
-  echo "users loaded";
+} else if (isset($_POST['login'])) {
+  include_once "controller/users.php";
+}
+//Logs user out
+if ($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['page'])) {
+  if ($_GET['page'] =='logout') {
+    if (isset($_SESSION['user'])) {
+      $userMessage = "You have successfully logged out!";
+    } else {
+      //This is in case a user tries to access this view when not logged in. 
+      $userMessage = "You have not yet logged in! So you cannot log out!";
+    }
+    session_destroy();
+
+  }
 }
