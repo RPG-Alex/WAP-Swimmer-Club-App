@@ -4,7 +4,7 @@ include_once "controller/viewLoader.php";
 $currentView = new View();
 if (isset($_GET['page'])) {
   $loadedView = $currentView->loadView($_GET['page']);
-  
+
 } else {
   $loadedView = $currentView->loadView('splash');
 }
@@ -15,8 +15,8 @@ if (isset($_POST['register'])) {
   include_once "controller/users.php";
 }
 //Logs user out
-if ($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['page'])) {
-  if ($_GET['page'] =='logout') {
+if ($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['logout'])) {
+  if ($_GET['logout'] =='yes') {
     if (isset($_SESSION['user'])) {
       $userMessage = "You have successfully logged out!";
     } else {

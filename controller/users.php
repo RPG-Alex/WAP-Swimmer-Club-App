@@ -42,8 +42,30 @@ if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])) {
                 'username' => trim($_POST['username']),
                 'usertype' => trim($_POST['userTypes'])
               ];
+
               include_once "model/Database.class.php";
               include_once "model/User.class.php";
+              $register = new Users();
+              if ($register->verifyEmptyUserName($registrationData['username']) == true) {
+                if ($register->registerUser($registrationData['DOB'],$registrationData['fname'],$registrationData['sname'],$registrationData['address'],$registrationData['post'],$registrationData['email'],$registrationData['phone']) == true) {
+                $registrationData['userID'] = $register->getUserID($registrationData['fname'],$registrationData['sname'],$registrationData['email']);
+                if ($registrationData['userID'] != false) {
+                  if ($register->addLoginCredentials($registrationData['userID'],$registrationData['pass1'],$registrationData['username']) == true) {
+                    if ($register->addTypeForUser($registrationData['userID'],$registrationData['usertype']) == true) {
+                      $userMessage = "Successfully Registered!";
+                    } else {
+                      $userMessage = "<font color='red'>Adding User type failed</font>";
+                    }
+                  } else {
+                    $userMessage = "<font color='red'>Adding Login Credentials has failed</font>";
+                  }
+                }
+                } else {
+                  $userMessage = "<font color='red'>Registration process has failed</font>";
+                }
+              } else {
+                $userMessage = "<font color='red'> Username already taken</font>";
+              }
             } else {
               $userMessage = "<font color='red'>Password retyped incorrectly</font>";
             }
@@ -62,6 +84,4 @@ if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])) {
     } else {
       $userMessage = "<font color='red'>Invalid first name </font> ";
     }
-
-
   }

@@ -29,7 +29,7 @@ class Users extends Database {
     return $userType;
   }
   public function registerUser($DOB,$fname,$sname,$address,$post,$email,$phone){
-        $this->db->prepQuery('INSERT INTO users(DOB, fname, sname, address, post, email, phone) VALUES(:dob, :fname, :sname:, :address, :post, :email, :phone)');
+        $this->db->prepQuery('INSERT INTO users(DOB, fname, sname, address, post, email, phone) VALUES(:dob, :fname, :sname, :address, :post, :email, :phone)');
         $this->db->bind(':dob', $DOB);
         $this->db->bind(':fname', $fname);
         $this->db->bind(':sname', $sname);

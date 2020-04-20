@@ -13,7 +13,7 @@ if ($_SESSION['userType'] =='1') {
       <input type='password' name='pass2' placeholder='re-enter password'>
       <input type='text' name= 'username' placeholder='select a username'>
       <label> User Type</label>
-      <select id='userTypes'>
+      <select id='userTypes' name='userTypes'>
         ";
         include_once "model/Database.class.php";
         include_once "model/User.class.php";
