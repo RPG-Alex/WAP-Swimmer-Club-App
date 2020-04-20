@@ -4,6 +4,7 @@ include_once "controller/viewLoader.php";
 $currentView = new View();
 if (isset($_GET['page'])) {
   $loadedView = $currentView->loadView($_GET['page']);
+  
 } else {
   $loadedView = $currentView->loadView('splash');
 }
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['page'])) {
     if (isset($_SESSION['user'])) {
       $userMessage = "You have successfully logged out!";
     } else {
-      //This is in case a user tries to access this view when not logged in. 
+      //This is in case a user tries to access this view when not logged in.
       $userMessage = "You have not yet logged in! So you cannot log out!";
     }
     session_destroy();
