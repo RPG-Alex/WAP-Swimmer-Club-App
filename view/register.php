@@ -1,17 +1,29 @@
 <?php
 if ($_SESSION['userType'] =='1') {
-  echo "<form class='register' action='index.php' method='post'>
-      <input type='text' name='first name' placeholder='first name'>
-      <input type='text' name='surname' placeholder='surname'>
-      <input type= 'email' name='email' placeholder='email'>
-      <input type='text' name='address' placeholder='street address'>
-      <input type='text' name='postal code' placeholder='postal code' >
-      <input type='tel' name='phone' placeholder = 'phone number'>
+  if (isset($registrationData) OR !isset($repopulateFields)) {
+    $repopulateFields= [
+      'first_name' => '',
+      'surname' => '',
+      'address' => '',
+      'postal_code' => '',
+      'email' => '',
+      'phone' => '',
+      'username' => ''
+    ];
+  }
+
+  echo "<form class='register' action='' method='post'>
+      <input type='text' name='first name' placeholder='first name' value='".$repopulateFields['first_name']."'>
+      <input type='text' name='surname' placeholder='surname' value='".$repopulateFields['surname']."'>
+      <input type= 'email' name='email' placeholder='email' value='".$repopulateFields['email']."'>
+      <input type='text' name='address' placeholder='street address' value='".$repopulateFields['address']."'>
+      <input type='text' name='postal code' placeholder='postal code' value='".$repopulateFields['postal_code']."'>
+      <input type='tel' name='phone' placeholder = 'phone number' value='".$repopulateFields['phone']."'>
       <label> Date of Birth</label>
-      <input type='date' name='birthday' placeholder='DOB'>
+      <input type='date' name='birthday' placeholder='DOB' >
       <input type='password' name='pass1' placeholder='enter password'>
       <input type='password' name='pass2' placeholder='re-enter password'>
-      <input type='text' name= 'username' placeholder='select a username'>
+      <input type='text' name= 'username' placeholder='select a username' value='".$repopulateFields['username']."'>
       <label> User Type</label>
       <select id='userTypes' name='userTypes'>
         ";

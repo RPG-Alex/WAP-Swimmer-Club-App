@@ -1,4 +1,5 @@
 <?php
+
 $userMessage = ""; // User message used to load messages related to logging in/out and registering. Is updated in the users.php controller only!
 include_once "controller/viewLoader.php";
 $currentView = new View();
