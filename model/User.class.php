@@ -7,7 +7,7 @@ class Users extends Database {
   }
   public function login($username,$password){
     //This function grabs data to use for verifying login and setting session variables
-    $this->db->prepQuery('SELECT login.userID, hash, username, typeID FROM login INNER JOIN users_type WHERE login.username = :username AND login.userID = users_type.userID');
+    $this->db->prepQuery('SELECT login.userID, hash, username, users.userTYPE FROM login INNER JOIN users WHERE login.username = :username AND login.userID = users.uid');
     $this->db->bind(':username',$username);
     $userData = $this->db->fetchSingleResult();
     //This checks that a row was returned, if not it returns false, if the row returns but the password doesn't match, it will also return false (false is used in controller as a simple way to verify logged in status)
@@ -28,8 +28,8 @@ class Users extends Database {
     $userType = $this->db->fetchSingleResult();
     return $userType;
   }
-  public function registerUser($DOB,$fname,$sname,$address,$post,$email,$phone){
-        $this->db->prepQuery('INSERT INTO users(DOB, fname, sname, address, post, email, phone) VALUES(:dob, :fname, :sname, :address, :post, :email, :phone)');
+  public function registerUser($DOB,$fname,$sname,$address,$post,$email,$phone, $userType){
+        $this->db->prepQuery('INSERT INTO users(DOB, fname, sname, address, post, email, phone, userTYPE) VALUES(:dob, :fname, :sname, :address, :post, :email, :phone, :userType)');
         $this->db->bind(':dob', $DOB);
         $this->db->bind(':fname', $fname);
         $this->db->bind(':sname', $sname);
@@ -37,6 +37,7 @@ class Users extends Database {
         $this->db->bind(':post', $post);
         $this->db->bind(':email', $email);
         $this->db->bind(':phone', $phone);
+        $this->db->bind(':userType', $userType);
         if($this->db->execute()){
           return true;
         } else {
@@ -86,16 +87,6 @@ class Users extends Database {
     $userTypes = $this->db->fetchResults();
     if (isset($userTypes)) {
       return $userTypes;
-    } else {
-      return false;
-    }
-  }
-  public function addTypeForUser($userID,$userType){
-    $this->db->prepQuery('INSERT INTO users_type(userID, typeID) VALUES(:userID, :typeID)');
-    $this->db->bind(':userID',$userID);
-    $this->db->bind(':typeID',$userType);
-    if ($this->db->execute()) {
-      return true;
     } else {
       return false;
     }

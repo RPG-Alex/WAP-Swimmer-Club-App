@@ -4,5 +4,6 @@
     <option value=''></option>
   </select>
   <input type='date' name='date' >
+  <input type="time" name="time" value="">
   <input type='submit' name='createRace' value='createRace'>
 </form>

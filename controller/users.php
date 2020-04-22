@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])) {
       //This starts the session only if their password works
       $_SESSION['user'] =  $loggedIn->username;
       $_SESSION['userID'] = $loggedIn->userID;
-      $_SESSION['userType'] = $loggedIn->typeID;
+      $_SESSION['userType'] = $loggedIn->userTYPE;
     } else {
       //Updates the usermessage variable to let user know they have failed to log in correctly
       $userMessage = "Login attempt failed. Please try logging in again or contact the Administrator to reset your password";
@@ -55,15 +55,11 @@ if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])) {
         $userMessage = "<font color='red'> Username already taken</font>";
         $repopulateFields = $_POST;
       } else {
-        if ($register->registerUser($registrationData['DOB'],$registrationData['fname'],$registrationData['sname'],$registrationData['address'],$registrationData['post'],$registrationData['email'],$registrationData['phone']) == true) {
+        if ($register->registerUser($registrationData['DOB'],$registrationData['fname'],$registrationData['sname'],$registrationData['address'],$registrationData['post'],$registrationData['email'],$registrationData['phone'],$registrationData['usertype']) == true) {
           $registrationData['userID'] = $register->getUserID($registrationData['fname'],$registrationData['sname'],$registrationData['email']);
           if ($registrationData['userID'] != false) {
             if ($register->addLoginCredentials($registrationData['userID'],$registrationData['pass1'],$registrationData['username']) == true) {
-              if ($register->addTypeForUser($registrationData['userID'],$registrationData['usertype']) == true) {
                 $userMessage = "Successfully Registered!";
-              } else {
-                $userMessage = "<font color='red'>Adding User type failed</font>";
-              }
             } else {
             $userMessage = "<font color='red'>Adding Login Credentials has failed</font>";
             }
