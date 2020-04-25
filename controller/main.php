@@ -3,6 +3,7 @@
 $userMessage = ""; // User message used to load messages related to logging in/out and registering. Is updated in the users.php controller only!
 include_once "controller/viewLoader.php";
 $currentView = new View();
+//Page View Controller
 if (isset($_GET['page'])) {
   $pagePrivelege = $currentView->viewPagePrivilege($_GET['page']);
   if ($pagePrivelege == false) {
@@ -23,6 +24,8 @@ if (isset($_POST['register'])) {
   include_once "controller/users.php";
 } else if (isset($_POST['login'])) {
   include_once "controller/users.php";
+} else {
+  include_once "controller/swim.php";
 }
 //Logs user out
 if ($_SERVER['REQUEST_METHOD']== 'GET' && isset($_GET['logout'])) {

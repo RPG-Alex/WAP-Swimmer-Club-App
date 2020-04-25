@@ -23,7 +23,7 @@ class Users extends Database {
   }
   public function getType($userID){
     //Not sure I need this function but good to have anyway if I do?
-    $this->db->prepQuery('SELECT * FROM users_type WHERE userID = :userID');
+    $this->db->prepQuery('SELECT userTYPE FROM users WHERE userID = :userID');
     $this->db->bind(':userID',$userID);
     $userType = $this->db->fetchSingleResult();
     return $userType;
@@ -89,6 +89,27 @@ class Users extends Database {
       return $userTypes;
     } else {
       return false;
+    }
+  }
+  public function regexInput($firstName,$lastName,$email,$address,$post,$pass1,$pass2,$phone,$dob,$username){
+    if (!preg_match('/^[A-Z \'.-]{2,20}$/i',$firstName)) {
+      return "<font color ='red'> Invalid First Name Please use only letters </font>";
+    }else if (!preg_match('/^[A-Z \'.-]{2,40}$/i',$lastName)) {
+      return "<font color ='red'> Invalid Last Name Please use only letters </font>";
+    } else if (!preg_match('/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/',$email)){
+      return "<font color ='red'> Invalid email, please input a valid email address </font>";
+    } elseif (!preg_match('/^[#.0-9a-zA-Z\s,-]{2,100}+$/i',$address)) {
+      return "<font color ='red'> Invalid address, please input a valid address </font>";
+    } else if (!preg_match('/^\w{4,20}$/',$pass1) OR $pass1 != $pass2) {
+      return "<font color='red'>Invalid Password Character or Passwords Do Not Match</font>";
+    } else if (!preg_match('/^\d{7,14}$/',$phone)) {
+      return "<font color='red'>Invalid Phone Number</font>";
+    } else if (!preg_match('/^(0?[1-9]|1[012])[-](0?[1-9]|[12][0-9]|3[01])[-](19|20)?[0-9]{2}$/',$dob)) {
+      return "<font color='red'>Invalid Birthday</font>";
+    } else if (!preg_match('/^[A-Z \'.-]{2,20}$/i',$username)){
+      return "<font color='red'>Invalid username</font>";
+    } else {
+      return true;
     }
   }
 }

@@ -6,7 +6,6 @@ class View {
         'addRaceResults' => 2,
         'addUsersToRace' =>2,
         'editRace' =>2,
-        'editUser' => 3,
         'register' => 1,
         'selectSwimmerStats.php' => 4,
         'swimStats' => 4,
@@ -42,5 +41,9 @@ class View {
     } else {
       return false;
     }
+  }
+  public function getViewsArray(){
+
+    return $this->viewPrivileges;
   }
 }
