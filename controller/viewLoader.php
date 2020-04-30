@@ -7,7 +7,7 @@ class View {
         'addUsersToRace' =>2,
         'editRace' =>2,
         'register' => 1,
-        'selectSwimmerStats.php' => 4,
+        'selectSwimmerStats' => 4,
         'swimStats' => 4,
         'updateSwimmer' =>3,
         'viewSwimmers' => 4,
