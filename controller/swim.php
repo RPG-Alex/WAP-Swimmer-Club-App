@@ -1,11 +1,16 @@
 <?php
+//Load Models
+include_once "model/Database.class.php";
+include_once "model/Swim.class.php";
+
+//Variable used for repopulating forms and showing details for user
 $repopulateFields = '';
-//Control intensifies
+//New Swim model called and can be invoked when needed
+$swim = new Swim();
+$allLocations = $swim->getAllLocations();
+
+//Control intensifies -- this will only execute if post is called
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  //Instantiate new Swim Object
-  include_once "model/Database.class.php";
-  include_once "model/Swim.class.php";
-  $swim = new Swim();
   //Burn it with fire
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
   //Perform actions based on what is posted
@@ -21,9 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       'locID' => trim($_POST['locations'])
     ];
     //Input to DB
+
     if ($swim->addRace($addRace['date-time'],$addRace['name'],$addRace['locID']) == true) {
       $userMessage = "Race Added";
-      //can output the details here and show them in the race details. Then just copy this code for if the user selects a race
+      $raceInfo = $swim->getRace($addRace['name'],$addRace['date-time'],$addRace['locID']);
     } else {
       $userMessage = "<font color = 'red'> Unable to Add Race";
       $repopulateFields = $_POST;

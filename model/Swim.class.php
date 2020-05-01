@@ -45,6 +45,29 @@ class Swim extends Database {
       return false;
     }
   }
+  public function getRace($raceName,$raceDateTime,$locationID){
+    $this->db->prepQuery('SELECT * FROM race WHERE raceName = :raceName AND date = :date AND location = :location');
+    $this->db->bind(':raceName',$raceName);
+    $this->db->bind(':date',$raceDateTime);
+    $this->db->bind(':location',$locationID);
+    $raceDetails = $this->db->fetchSingleResult();
+    if (isset($raceDetails)) {
+      return $raceDetails; 
+    } else {
+      return false;
+    }
+  }
+  public function getRaceDetailsByID($raceID){
+    $this->db->prepQuery('SELECT * FROM race WHERE raceID = :raceID');
+    $this->db->bind(':raceID',$raceID);
+    $raceDetails = $this->db->fetchSingleResult();
+    if (isset($raceDetails)) {
+      return $raceDetails;
+    } else {
+      return false;
+    }
+
+  }
   public function editRace($date,$raceName,$locationID,$raceID){
     $this->db->prepQuery('UPDATE race SET date = :date, raceName = :raceName, location = :location WHERE raceID = :raceID ');
     $this->db->bind(':date',$date);
@@ -164,7 +187,7 @@ class Swim extends Database {
     }
   }
   public function getPracticeResults(){
-    
+
   }
   public function updatePracticeResults(){
 

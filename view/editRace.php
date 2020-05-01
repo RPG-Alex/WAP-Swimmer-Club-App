@@ -1,10 +1,3 @@
-<?php
-include_once "model/Database.class.php";
-include_once "model/Swim.class.php";
-$locationGetter = new Swim();
-$allLocations = $locationGetter->getAllLocations();
-
-?>
 
 <h1>Races</h1>
 <div class="makeRace">
@@ -25,30 +18,76 @@ $allLocations = $locationGetter->getAllLocations();
     <input type="submit" name="addRace" value="add Race">
   </form>
   </fieldset>
-    <fieldset>
-      <table>
-        <tr>
-          <td><th>Race Details</th></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Race Name: </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Race Location: </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Race Date: </td>
-          <td></td>
-        </tr>
-        <tr>
-          <td>Race Time: </td>
-          <td></td>
-        </tr>
-      </table>
-    </fieldset>
+    <?php
+    if (isset($raceInfo)) {
+      foreach ($allLocations as $singleLocation) {
+        if ($singleLocation->locID == $raceInfo->location) {
+          $raceLocationName = $singleLocation->name;
+        }
+      }
+      $DateTime = New DateTime($raceInfo->date);
+      $raceDate = $DateTime->format ('Y-m-d');
+      $raceTime = $DateTime->format('H:i:s');
+      echo "<fieldset>
+        <table>
+          <tr>
+            <td><th>Race Details</th></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Race Name: </td>
+            <td>$raceInfo->raceName</td>
+          </tr>
+          <tr>
+            <td>Race Location: </td>
+            <td>$raceLocationName</td>
+          </tr>
+          <tr>
+            <td>Race Date: </td>
+            <td>$raceDate</td>
+          </tr>
+          <tr>
+            <td>Race Time: </td>
+            <td>$raceTime</td>
+          </tr>
+        </table>
+      </fieldset>";
+    } elseif (isset($_POST['selectRace'])) {
+      $raceInfo = $swim->getRaceDetailsByID($_POST['race']);
+      $DateTime = New DateTime($raceInfo->date);
+      $raceDate = $DateTime->format ('Y-m-d');
+      $raceTime = $DateTime->format('H:i:s');
+      foreach ($allLocations as $singleLocation) {
+        if ($singleLocation->locID == $raceInfo->location) {
+          $raceLocationName = $singleLocation->name;
+        }
+      }
+      echo "<fieldset>
+        <table>
+          <tr>
+            <td><th>Race Details</th></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Race Name: </td>
+            <td>$raceInfo->raceName</td>
+          </tr>
+          <tr>
+            <td>Race Location: </td>
+            <td>$raceLocationName</td>
+          </tr>
+          <tr>
+            <td>Race Date: </td>
+            <td>$raceDate</td>
+          </tr>
+          <tr>
+            <td>Race Time: </td>
+            <td>$raceTime</td>
+          </tr>
+        </table>
+      </fieldset>";
+    }
+     ?>
 </fieldset>
 </div>
 <div class="editRace">
@@ -56,10 +95,16 @@ $allLocations = $locationGetter->getAllLocations();
 <fieldset>
   <h3>Select A Race to Edit</h3>
 <form class="" action="" method="post" >
+  <?php
+  $races = $swim->getAllRaces();
+   ?>
   <select id="race" name='race'>
     <label for="race"></label>
-    <option value='race'>race</option>
-    <option value='race'>race</option>
+    <?php
+    foreach ($races as $race) {
+      echo "<option value='$race->raceID'>$race->raceName</option>";
+    }
+     ?>
   </select>
   <input type="submit" name="selectRace" value="Select Race">
 </form>
