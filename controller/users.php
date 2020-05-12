@@ -1,8 +1,18 @@
 <?php
+include_once "model/Database.class.php";
+include_once "model/User.class.php";
+  $repopulateFields= [
+    'first_name' => '',
+    'surname' => '',
+    'address' => '',
+    'postal_code' => '',
+    'email' => '',
+    'phone' => '',
+    'username' => ''
+  ];
+
 // Login and Registration Controller
 if ($_SERVER['REQUEST_METHOD']=='POST' && isset($_POST['login'])) {
-  include_once "model/Database.class.php";
-  include_once "model/User.class.php";
   $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     $loginData =[
       'username' => trim($_POST['userid']),

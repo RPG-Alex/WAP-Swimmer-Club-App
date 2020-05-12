@@ -34,9 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $userMessage = "<font color = 'red'> Unable to Add Race";
       $repopulateFields = $_POST;
     }
-  } else if (isset($_POST['selectRace'])){
-
   } elseif (isset($_POST['updateRace'])) {
-    // code...
+    $date = New DateTime(trim($_POST['date']));
+    $time = New DateTime(trim($_POST['time']));
+    $dateTime = new DateTime($date->format('Y-m-d').''.$time->format('H:i:s'));
+
+    $updateRace = $swim->editRace($dateTime,$_POST['']);
   }
 }

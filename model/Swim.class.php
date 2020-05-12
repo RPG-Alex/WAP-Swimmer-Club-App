@@ -52,7 +52,7 @@ class Swim extends Database {
     $this->db->bind(':location',$locationID);
     $raceDetails = $this->db->fetchSingleResult();
     if (isset($raceDetails)) {
-      return $raceDetails; 
+      return $raceDetails;
     } else {
       return false;
     }
@@ -185,6 +185,23 @@ class Swim extends Database {
     } else {
       return false;
     }
+  }
+  public function getUsersOnRace($userID,$raceID){
+    $this->db->prepQuery('
+    
+    ')
+  }
+  public function getUserPracticeResults(){
+
+  }
+  public function getUserRaceResults($swimmerID){
+
+    //still being written
+    $this->db->prepQuery('
+    SELECT `users`.*, `swimmersOnPractice`.*
+    FROM `users`
+	   INNER JOIN `swimmersOnPractice` ON `swimmersOnPractice`.`swimmerID` = `users`.`uid`;
+    ');
   }
   public function getPracticeResults(){
 

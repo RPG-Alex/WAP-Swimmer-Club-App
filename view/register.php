@@ -1,17 +1,6 @@
 <?php
 if ($_SESSION['userType'] =='1') {
-  if (isset($registrationData) OR !isset($repopulateFields)) {
-    $repopulateFields= [
-      'first_name' => '',
-      'surname' => '',
-      'address' => '',
-      'postal_code' => '',
-      'email' => '',
-      'phone' => '',
-      'username' => ''
-    ];
-  }
-
+include_once "controller/users.php";
   echo "<form class='register' action='' method='post'>
       <input type='text' name='first name' placeholder='first name' value='".$repopulateFields['first_name']."'>
       <input type='text' name='surname' placeholder='surname' value='".$repopulateFields['surname']."'>
@@ -27,8 +16,6 @@ if ($_SESSION['userType'] =='1') {
       <label> User Type</label>
       <select id='userTypes' name='userTypes'>
         ";
-        include_once "model/Database.class.php";
-        include_once "model/User.class.php";
   $getTypes = new Users;
   $userTypes = $getTypes->getUserTypes();
   foreach ($userTypes as $userType) {

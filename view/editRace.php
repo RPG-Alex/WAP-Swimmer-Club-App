@@ -107,7 +107,7 @@
       <input type='time' name='time' value='$raceTime'>
       <input type='text' name='name' value='$raceInfo->raceName' placeholder='name'>
       <label for='locations'>Locations</label>
-      <select  name='race' id='locations'>
+      <select  name='location' id='locations'>
       <option value='$raceLocationID' selected='selected'>$raceLocationName</option>";
       foreach ($allLocations as $location) {
         if ($location->locID != $raceLocationID) {
