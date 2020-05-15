@@ -1,6 +1,5 @@
 <?php
 $swimmers = $swim->getAllSwimmers();
-
  ?>
 
 <form class='' action='' method='post'>

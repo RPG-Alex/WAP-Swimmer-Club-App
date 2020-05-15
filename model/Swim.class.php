@@ -99,9 +99,7 @@ class Swim extends Database {
       return false;
     }
   }
-  public function removeSwimmerFromRace(){
 
-  }
   //This function can be used to add and update race results
   public function addRaceResults($raceID,$swimmerID,$lap1 = NULL, $lap2 = NULL, $lap3= NULL, $lap4= NULL, $lap5= NULL, $lap6= NULL, $lap7 = NULL, $lap8 = NULL, $lap9= NULL, $lap10= NULL){
     $this->db->prepQuery('UPDATE swimmersOnRace SET lap1 =:lap1,lap2 = :lap2, lap3=:lap3, lap4 =:lap4, lap5 = :lap5, lap6=:lap6, lap7 = :lap7, lap8 = :lap8, lap9 = :lap9, lap10 = :lap10 WHERE swimID = :swimID AND raceID = :raceID');
@@ -163,9 +161,7 @@ class Swim extends Database {
       return false;
     }
   }
-  public function removeSwimmerFromPractice(){
 
-  }
   public function addPracticeResults($practiceID,$swimmerID,$lap1 = NULL, $lap2 = NULL, $lap3= NULL, $lap4= NULL, $lap5= NULL, $lap6= NULL, $lap7 = NULL, $lap8 = NULL, $lap9= NULL, $lap10= NULL){
     $this->db->prepQuery('UPDATE swimmersOnPractice SET lap1 =:lap1,lap2 = :lap2, lap3=:lap3, lap4 =:lap4, lap5 = :lap5, lap6=:lap6, lap7 = :lap7, lap8 = :lap8, lap9 = :lap9, lap10 = :lap10 WHERE swimmerID = :swimID AND practiceID = :practiceID');
     $this->db->bind(':practiceID',$practiceID);
@@ -186,14 +182,8 @@ class Swim extends Database {
       return false;
     }
   }
-  public function getUsersOnRace($userID,$raceID){
-    //$this->db->prepQuery('')
-  }
-  public function getUserPracticeResults(){
 
-  }
   public function getUserRaceResults($swimmerID){
-
     //still being written
     $this->db->prepQuery('
     SELECT `users`.*, `swimmersOnPractice`.*
@@ -220,7 +210,24 @@ class Swim extends Database {
       return false;
     }
   }
-  public function updatePracticeResults(){
-
+  public function getSwimmerRaceStats($swimmerID){
+    $this->db->prepQuery('SELECT * FROM users INNER JOIN swimmersOnRace INNER JOIN race INNER JOIN raceLocations WHERE users.uid = :swimmerID AND users.uid = swimmersOnRace.swimID AND swimmersOnRace.raceID = race.raceID AND race.location = raceLocations.locID');
+    $this->db->bind(':swimmerID',$swimmerID);
+    $details = $this->db->fetchResults();
+    if (isset($details)) {
+      return $details;
+    } else {
+      return false;
+    }
+  }
+  public function getSwimmerPracticeStats($swimmerID){
+    $this->db->prepQuery('SELECT * FROM users INNER JOIN swimmersOnPractice INNER JOIN practice INNER JOIN raceLocations WHERE users.uid = :swimmerID AND users.uid = swimmersOnPractice.swimmerID AND swimmersOnPractice.practiceID = practice.praID AND practice.location = raceLocations.locID');
+    $this->db->bind(':swimmerID',$swimmerID);
+    $details = $this->db->fetchResults();
+    if (isset($details)) {
+      return $details;
+    } else {
+      return false;
+    }
   }
 }
