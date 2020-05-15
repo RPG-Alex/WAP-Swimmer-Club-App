@@ -18,7 +18,11 @@
       if ($_SESSION['userType'] <=3) {
         //echo "Edit Swimmer Data ";
         if ($_SESSION['userType'] <=2) {
-          echo "Coaching: <a href='index.php?page=editRace'>Races</a> ";
+          echo "
+          Coaching:
+          <a href='index.php?page=editRace'>Races</a>
+          <a href='index.php?page=addRaceResults'> Add Results </a>
+          ";
           if ($_SESSION['userType'] == 1) {
             //Regisration is only available to admin
             echo " Admin: <a href='index.php?page=register'>Register a new swimmer</a> ";

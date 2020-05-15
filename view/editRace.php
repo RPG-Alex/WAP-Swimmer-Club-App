@@ -120,14 +120,7 @@
     </form>
     </fieldset>";
   }
-if (isset($_POST['updateRace'])) {
 
-  echo "<script>
-       setTimeout(function(){
-          window.location.href = 'http://localhost/WAP-Swimmer-Club-App/index.php?page=editRace';
-       }, 5000);
-    </script>";
-}
  ?>
 
 </fieldset>

@@ -143,9 +143,9 @@ class Swim extends Database {
         return false;
       }
     }
-  public function getPracticeByDateTime($dateTime){
+  public function getPracticeByDate($date){
     $this->db->prepQuery('SELECT * FROM practice WHERE date = :date');
-    $this->db->bind(':date',$dateTime);
+    $this->db->bind(':date',$date);
     $result = $this->db->fetchSingleResult();
     if (isset($result)) {
       return $result;
@@ -201,8 +201,18 @@ class Swim extends Database {
 	   INNER JOIN `swimmersOnPractice` ON `swimmersOnPractice`.`swimmerID` = `users`.`uid`;
     ');
   }
-  public function getPracticeResults(){
+  public function getAllPractices(){
 
+  }
+  public function getAllPracticeResults($date){
+    $this->db->prepQuery('SELECT * FROM practice INNER JOIN swimmersOnPractice INNER JOIN users INNER JOIN raceLocations WHERE practice.date = :date AND practice.praID=swimmersOnPractice.practiceID AND swimmersOnPractice.swimmerID = users.uid AND practice.location = raceLocations.locID');
+    $this->db->bind(':date',$date);
+    $result = $this->db->fetchResults();
+    if (isset($result)) {
+      return $result;
+    }else {
+      return false;
+    }
   }
   public function updatePracticeResults(){
 
