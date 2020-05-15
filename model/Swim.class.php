@@ -156,7 +156,7 @@ class Swim extends Database {
   public function addSwimmerToPractice($swimmerID,$practiceID){
     $this->db->prepQuery('INSERT INTO swimmersOnPractice(swimmerID,practiceID) VALUES(:swimID, :practiceID)');
     $this->db->bind(':swimID',$swimmerID);
-    $this->db->bind(':raceID',$raceID);
+    $this->db->bind(':practiceID',$practiceID);
     if ($this->db->execute()) {
       return true;
     } else {
@@ -202,7 +202,13 @@ class Swim extends Database {
     ');
   }
   public function getAllPractices(){
-
+    $this->db->prepQuery('SELECT * FROM practice');
+    $practice = $this->db->fetchResults();
+    if (isset($practice)) {
+      return $practice;
+    } else {
+      return false;
+    }
   }
   public function getAllPracticeResults($date){
     $this->db->prepQuery('SELECT * FROM practice INNER JOIN swimmersOnPractice INNER JOIN users INNER JOIN raceLocations WHERE practice.date = :date AND practice.praID=swimmersOnPractice.practiceID AND swimmersOnPractice.swimmerID = users.uid AND practice.location = raceLocations.locID');

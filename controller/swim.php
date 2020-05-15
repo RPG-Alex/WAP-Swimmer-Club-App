@@ -70,4 +70,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
   }
 }
+  if (isset($_POST['addPractice'])) {
+    $addPractice = $swim->addPractice(trim($_POST['practiceDate']),trim($_POST['location']));
+    if ($addPractice != false) {
+      $userMessage = "Practice Successfully Added!";
+    } else {
+      $userMessage = "Something has gone wrong please contact the system administrator";
+    }
+    $grabNewPracticeID = $swim->getPracticeByDate(trim($_POST['practiceDate']));
+    foreach ($_POST['swimmers'] as $newSwimmer) {
+      $addSwimmerToPractice = $swim->addSwimmerToPractice(trim($newSwimmer),$grabNewPracticeID->praID);
+      if ($addSwimmerToPractice == false) {
+        $userMessage.= " Swimmer unable to add to race. Please contact system administrator";
+      }
+    }
+    $userMessage.=" Will redirect to practice form shortly...";
+    $dateToUse = $_POST['practiceDate'];
+    echo "<script>
+         setTimeout(function(){
+            window.location.href = 'http://localhost/WAP-Swimmer-Club-App/index.php?page=addRaceResults&type=practice&date=$dateToUse';
+         }, 5000);
+      </script>";
+  }
 }

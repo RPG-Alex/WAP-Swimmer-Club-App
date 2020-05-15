@@ -2,7 +2,7 @@
 class View {
   private $getView;
   private     $viewPrivileges = [
-        'addPracticeData' => 1,
+        'addPractice' => 2,
         'addRaceResults' => 2,
         'addUsersToRace' =>2,
         'editRace' =>2,

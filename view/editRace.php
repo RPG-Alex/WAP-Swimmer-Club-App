@@ -139,7 +139,7 @@ $availableRaces = $swim->getAllRaces();
     <form class='' action='' method='post'>
       <input type='hidden' name='race' value='1'>
       <label>$raceDetails->raceName </label>
-      <input type='hidden' name='raceid' value='$raceDetails->raceID'><ui style='list-style:none;'>";
+      <input type='hidden' name='raceid' value='$raceDetails->raceID'><ul style='list-style:none;'>";
 
       // this converts all the racer ids to one array for comparing to racers to add. If the id is a match, it will not list it
       $swimmersOnRace = $swim->getRaceResults($raceDetails->raceID);

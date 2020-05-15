@@ -1,6 +1,6 @@
 <?php
 $raceSelection = $swim->getAllRaces();
-//$practiceSelection = $swim->getAllPractices(); //needs to be implmeneted
+
  ?>
 
 <?php if (!isset($_GET['type'])): ?>

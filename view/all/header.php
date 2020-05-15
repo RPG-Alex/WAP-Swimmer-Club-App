@@ -21,6 +21,7 @@
           echo "
           Coaching:
           <a href='index.php?page=editRace'>Races</a>
+          <a href='index.php?page=addPractice'> Practices</a>
           <a href='index.php?page=addRaceResults'> Add Results </a>
           ";
           if ($_SESSION['userType'] == 1) {
