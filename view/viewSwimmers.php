@@ -1,7 +1,7 @@
 <?php
 //This will get the details for all swimmers
 $swimmers = $swim->getAllSwimmers();
-var_dump($_POST);
+
  ?>
 <fieldset>
   <h2>All Swimmers:</h2>
@@ -10,7 +10,7 @@ var_dump($_POST);
     <?php
       foreach ($swimmers as $swimmer) {
         echo "<tr>
-          <td><a href='index.php?page=viewSwimmers&amp;id=$swimmer->uid'>$swimmer->fname $swimmer->sname</a></td>
+          <td><a href='index.php?page=viewUserInfo&id=$swimmer->uid'>$swimmer->fname $swimmer->sname</a></td>
         </tr>";
       }
      ?>

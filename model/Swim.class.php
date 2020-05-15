@@ -182,15 +182,6 @@ class Swim extends Database {
       return false;
     }
   }
-
-  public function getUserRaceResults($swimmerID){
-    //still being written
-    $this->db->prepQuery('
-    SELECT `users`.*, `swimmersOnPractice`.*
-    FROM `users`
-	   INNER JOIN `swimmersOnPractice` ON `swimmersOnPractice`.`swimmerID` = `users`.`uid`;
-    ');
-  }
   public function getAllPractices(){
     $this->db->prepQuery('SELECT * FROM practice');
     $practice = $this->db->fetchResults();
@@ -230,4 +221,55 @@ class Swim extends Database {
       return false;
     }
   }
+  public function getSwimmerProfileDetails($swimmerID){
+    $this->db->prepQuery('SELECT * FROM users WHERE uid = :swimmerID');
+    $this->db->bind(':swimmerID',$swimmerID);
+    $userInfo = $this->db->fetchSingleResult();
+    if (isset($userInfo)) {
+      return $userInfo;
+    } else {
+      return false;
+    }
+  }
+  public function isSwimmerParent($parentID,$childID){
+    $this->db->prepQuery('SELECT * FROM family WHERE parentID = :parentID AND childID = :childID');
+    $this->db->bind(':parentID',$parentID);
+    $this->db->bind(':childID',$childID);
+    $userInfo = $this->db->fetchSingleResult();
+    if (isset($userInfo)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  public function updateSwimmerInfo($userID,$fname,$sname,$address,$post,$email,$phone){
+        $this->db->prepQuery('UPDATE users SET fname = :fname, sname =:sname, address=:address,post=:post,email=:email,phone=:phone WHERE uid = :userID');
+        $this->db->bind(':fname', $fname);
+        $this->db->bind(':sname', $sname);
+        $this->db->bind(':address', $address);
+        $this->db->bind(':post', $post);
+        $this->db->bind(':email', $email);
+        $this->db->bind(':phone', $phone);
+        $this->db->bind(':userID', $userID);
+        if($this->db->execute()){
+          return true;
+        } else {
+            return false;
+          }
+      }
+      public function regexInput($firstName,$lastName,$email,$address,$post,$phone){
+        if (!preg_match('/^[A-Z \'.-]{2,20}$/i',$firstName)) {
+          return "<font color ='red'> Invalid First Name Please use only letters </font>";
+        }else if (!preg_match('/^[A-Z \'.-]{2,40}$/i',$lastName)) {
+          return "<font color ='red'> Invalid Last Name Please use only letters </font>";
+        } else if (!preg_match('/^[\w.-]+@[\w.-]+\.[A-Za-z]{2,6}$/',$email)){
+          return "<font color ='red'> Invalid email, please input a valid email address </font>";
+        } elseif (!preg_match('/^[#.0-9a-zA-Z\s,-]{2,100}+$/i',$address)) {
+          return "<font color ='red'> Invalid address, please input a valid address </font>";
+        } else if (!preg_match('/^\d{7,14}$/',$phone)) {
+          return "<font color='red'>Invalid Phone Number</font>";
+        } else {
+          return true;
+        }
+      }
 }

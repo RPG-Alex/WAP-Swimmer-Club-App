@@ -92,4 +92,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
          }, 5000);
       </script>";
   }
+  if (isset($_POST['updateUserInfo'])) {
+    $updatedData = [
+      'fname' => trim($_POST['firstName']),
+      'sname' => trim($_POST['surname']),
+      'address' => trim($_POST['address']),
+      'post' => trim($_POST['postalCode']),
+      'email' => trim($_POST['email']),
+      'phone' => trim($_POST['phone']),
+      'userID' => trim($_POST['userID'])
+    ];
+    $regex=$swim->regexInput($updatedData['fname'],$updatedData['sname'],$updatedData['email'],$updatedData['address'],$updatedData['post'],$updatedData['phone']);
+    if ($regex == true) {
+      $updateUser = $swim->updateSwimmerInfo($updatedData['userID'],$updatedData['fname'],$updatedData['sname'],$updatedData['address'],$updatedData['post'],$updatedData['email'],$updatedData['phone']);
+      if ($updateUser == true) {
+        $userMessage = "Information Successfully Updated";
+      } else {
+        $userMessage = "Unable to udpate user, please contact administrator";
+      }
+    } else {
+      $userMessage = $regex;
+    }
+  }
 }

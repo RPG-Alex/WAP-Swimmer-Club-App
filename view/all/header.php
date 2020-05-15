@@ -32,17 +32,7 @@
       }
     }
   }
-  /*
-  <a href='index.php?page=addPracticeData'>Add Practice Data</a>
-  <a href='index.php?page=addRaceResults'>Add Race Results</a>
-  <a href='index.php?page=addUsersToRace'>Add Users to Race</a>
 
-  <a href='index.php?page=editUser'>Edit User</a>
-  <a href='index.php?page=selectSwimmerStats'>Select Stats</a>
-  <a href='index.php?page=swimStats'>Swimmer Stats</a>
-  <a href='index.php?page=updateSwimmer'>Update Swimmer</a>
-  <a href='index.php?page=viewSwimmers'>View Swimmers</a>
-  <a href='index.php?page=viewUserInfo'>View Profile</a> */
    ?>
  </div>
 
