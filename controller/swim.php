@@ -38,7 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $date = New DateTime(trim($_POST['date']));
     $time = New DateTime(trim($_POST['time']));
     $dateTime = new DateTime($date->format('Y-m-d').''.$time->format('H:i:s'));
-
-    $updateRace = $swim->editRace($dateTime,$_POST['']);
+    
+    $updateThisRace=$swim->editRace($dateTime->format('Y-m-d H:i:s'),trim($_POST['name']),trim($_POST['location']),trim($_POST['raceID']));
+    if ($updateThisRace!= false) {
+      $userMessage = "Successfully Updated! Will Refresh in a moment";
+    }
   }
 }

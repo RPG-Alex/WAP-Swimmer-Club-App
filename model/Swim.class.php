@@ -187,9 +187,7 @@ class Swim extends Database {
     }
   }
   public function getUsersOnRace($userID,$raceID){
-    $this->db->prepQuery('
-    
-    ')
+    //$this->db->prepQuery('')
   }
   public function getUserPracticeResults(){
 

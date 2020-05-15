@@ -19,7 +19,7 @@
   </form>
   </fieldset>
     <?php
-    if (isset($_POST['selectRace']) OR isset($_POST['addRace']) OR isset($_POST['updateRace'])) {
+    if (isset($_POST['selectRace']) OR isset($_POST['addRace'])) {
       if (!isset($raceInfo)) {
         $raceInfo = $swim->getRaceDetailsByID($_POST['race']);
       }
@@ -105,6 +105,7 @@
       <label for='addRace'>Update Race Details</label>
       <input type='date' name='date' value='$raceDate'>
       <input type='time' name='time' value='$raceTime'>
+      <input type='hidden' name='raceID' value='$raceInfo->raceID'>
       <input type='text' name='name' value='$raceInfo->raceName' placeholder='name'>
       <label for='locations'>Locations</label>
       <select  name='location' id='locations'>
@@ -119,8 +120,83 @@
     </form>
     </fieldset>";
   }
+if (isset($_POST['updateRace'])) {
 
+  echo "<script>
+       setTimeout(function(){
+          window.location.href = 'http://localhost/WAP-Swimmer-Club-App/index.php?page=editRace';
+       }, 5000);
+    </script>";
+}
  ?>
 
 </fieldset>
 </div>
+<fieldset>
+<h3>Add Users to Race:</h3>
+
+<?php
+$availableRaces = $swim->getAllRaces();
+
+  if (isset($_POST['selectThisRace'])) {
+    $raceDetails = $swim->getRaceDetailsByID($_POST['locations']);
+    $addableRacers = $swim->getAllSwimmers();
+    echo "
+    <fieldset>
+    <form class='' action='' method='post'>
+      <input type='hidden' name='race' value='1'>
+      <label>$raceDetails->raceName </label>
+      <input type='hidden' name='raceid' value='$raceDetails->raceID'><ui style='list-style:none;'>";
+
+      // this converts all the racer ids to one array for comparing to racers to add. If the id is a match, it will not list it
+      $swimmersOnRace = $swim->getRaceResults($raceDetails->raceID);
+      $alreadyOnRace = null;
+      foreach ($swimmersOnRace as $individuals) {
+        if (!isset($alreadyOnRace)) {
+          $alreadyOnRace = [$individuals->swimID];
+        } else {
+          array_push($alreadyOnRace,$individuals->swimID);
+        }
+      }
+    foreach ($addableRacers as $racer) {
+      //this only lets the user add racers that are not on that race!
+        if (in_array($racer->uid,$alreadyOnRace)) {
+          echo "<li><b>$racer->fname $racer->sname</b> is already on the race!</li>";
+        } else {
+          echo "<li><input type='checkbox' name='check_list[]' value='$racer->uid'>$racer->fname $racer->sname </li>";
+        }
+
+      }
+    echo "</ul>
+      <input type='submit' name='addRacer' value='Add Swimmer'>
+    </form>
+    </fieldset>";
+
+  } elseif (isset($_POST['addRacer'])) {
+    foreach ($_POST['check_list'] as $racer) {
+        $addRacer = $swim->addSwimmerToRace(trim($racer),trim($_POST['raceid']));
+    }
+    $RaceDetails = $swim->getRaceDetailsByID(trim($_POST['raceid']));
+    echo "Racers Added! Window Will Refresh Shortly";
+    echo "<script>
+         setTimeout(function(){
+            window.location.href = 'http://localhost/WAP-Swimmer-Club-App/index.php?page=editRace';
+         }, 5000);
+      </script>";
+  }
+  else {
+    echo "<fieldset>
+    <label for='raceSelect'><b>Select A Race</b></label>
+    <form class= action='' method='post' name='raceSelect'>
+      <select class='' name='locations' id='locations'>";
+      foreach ($availableRaces as $race) {
+        echo "<option value='$race->raceID'>$race->raceName</option>";
+      }
+      echo "
+      </select>
+      <input type='submit' name='selectThisRace' value='Select Race'>
+    </form>
+    </fieldset>";
+  }
+ ?>
+</fieldset>
