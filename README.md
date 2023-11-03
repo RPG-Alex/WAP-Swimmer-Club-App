@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-# Swimmer-Club-App
+# Swimmer Club App
 <div align="center">
     <img src="swim-club-logo.png" alt="Logo" width="100" height="100">
 </div>
